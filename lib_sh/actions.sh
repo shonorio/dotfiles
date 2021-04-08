@@ -116,35 +116,35 @@ function install_homebrew() {
     brew_bin=$(which brew) 2>&1 > /dev/null
     if [[ $? != 0 ]]; then
         action "installing homebrew"
-        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         if [[ $? != 0 ]]; then
             error "unable to install homebrew, script $0 abort!"
             exit 2
         fi
         
-        # running "configuring homebrew..."
-        # # set zsh as the user login shell
-        # UNAME_MACHINE="$(/usr/bin/uname -m)"
-        # HOMEBREW_BIN=""
-        # HOMEBREW_SHELL=""
-        # if [[ "$UNAME_MACHINE" == "arm64" ]]; then
-        #     # On ARM macOS, this script installs to /opt/homebrew only
-        #     HOMEBREW_BIN="/opt/homebrew/bin/brew"
-        #     HOMEBREW_SHELL='eval $(/opt/homebrew/bin/brew shellenv)'
-        # else
-        #     # On Intel macOS, this script installs to /usr/local only
-        #     HOMEBREW_BIN="/usr/local/bin/brew"
-        #     HOMEBREW_SHELL='eval $(/usr/local/bin/brew shellenv)'
-        # fi
+        running "configuring homebrew..."
+        # set zsh as the user login shell
+        UNAME_MACHINE="$(/usr/bin/uname -m)"
+        HOMEBREW_BIN=""
+        HOMEBREW_SHELL=""
+        if [[ "$UNAME_MACHINE" == "arm64" ]]; then
+            # On ARM macOS, this script installs to /opt/homebrew only
+            HOMEBREW_BIN="/opt/homebrew/bin/brew"
+            HOMEBREW_SHELL='eval $(/opt/homebrew/bin/brew shellenv)'
+        else
+            # On Intel macOS, this script installs to /usr/local only
+            HOMEBREW_BIN="/usr/local/bin/brew"
+            HOMEBREW_SHELL='eval $(/usr/local/bin/brew shellenv)'
+        fi
 
-        # grep $HOMEBREW_SHELL ~/.zprofile > /dev/null 2>&1
-        # if [[ $? = 0 ]]; then
-        #     ok
-        # else
-        #     echo $HOMEBREW_SHELL >> ~/.zprofile
-        #     eval $HOMEBREW_SHELL
-        #     ok
-        # fi
+        grep $HOMEBREW_SHELL ~/.zprofile > /dev/null 2>&1
+        if [[ $? = 0 ]]; then
+            ok
+        else
+            echo $HOMEBREW_SHELL >> ~/.zprofile
+            eval $HOMEBREW_SHELL
+            ok
+        fi
 
         brew analytics off
     else
