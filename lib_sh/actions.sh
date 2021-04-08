@@ -175,6 +175,7 @@ function _install_xcode() {
     require_cask xcodeclangformat
     require_cask appcleaner
 }
+
 # ###########################################################
 # install essential dev tools kit
 # ###########################################################
@@ -185,6 +186,15 @@ function install_essential_dev_tools() {
     require_brew mas
     require_cask visual-studio-code
     require_cask iterm2
+
+    # Check if user is loged 
+    mas account &> /dev/null
+    if [[ $? != 0 ]]; then
+        warn "You are not signed in App Store, please signed before continue"
+        warn "Press ENTER after signed in"
+        read -r -p ""
+    fi
+
     _install_xcode
 
     # update ruby to latest
