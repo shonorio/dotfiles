@@ -330,15 +330,16 @@ function setup_config_files() {
     grep HOMEBREWPATH ./homedir/.shellpaths > /dev/null 2>&1
     if [[ $? = 0 ]]; then
         HOMEBREWPATH=""
+        UNAME_MACHINE="$(/usr/bin/uname -m)"
         if [[ "$UNAME_MACHINE" == "arm64" ]]; then
             # On ARM macOS, this script installs to /opt/homebrew only
-            HOMEBREWPATH="/opt/homebrew/"
+            HOMEBREWPATH="/opt/homebrew"
         else
             # On Intel macOS, this script installs to /usr/local only
-            HOMEBREWPATH="/usr/local/bin/"
+            HOMEBREWPATH="/usr/local/bin"
         fi
 
-        sed -i '' 's/HOMEBREWPATH/'$HOMEBREWPATH'/' ./homedir/.shellpaths
+        sed -i '' "s|HOMEBREWPATH|$HOMEBREWPATH|g" ./homedir/.shellpaths
     else
         ok
     fi
