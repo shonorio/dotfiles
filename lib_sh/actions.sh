@@ -169,6 +169,7 @@ function install_homebrew() {
 
 function _install_xcode() {
     ## Xcode
+    running "Installing Xcode"
     require_mas 497799835
     sudo xcodebuild -license accept
 
