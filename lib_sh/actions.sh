@@ -248,16 +248,19 @@ function enable_spyware_ad_blocking_by_hosts() {
 
 function install_productive() {
     # Slack
+    running "Install Slack"
     require_mas 803453959
     # InjectionIII
+    running "Install InjectionIII"
     require_mas 1380446739
     # Kindle
+    running "Install Kindle"
     require_mas 405399194
-    # Microsoft To Do
-    require_mas 1274495053
     # DuckDuckGo Privacy Essentials
+    running "DuckDuckGo Privacy Essentials"
     require_mas 1482920575
     # Grammarly for
+    running "Grammarly"
     require_mas 1462114288
 
     require_cask spotify
